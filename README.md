@@ -74,6 +74,10 @@ jupyter lab am-lines-demo.ipynb
 `am-lines-demo.ipynb` is saved with its output, from the 12 dumps, so you can read it on GitHub first. Run it again on your own data with
 *Restart Kernel and Run All Cells*.
 
+**Or run it as a paced demo.** After step 1, `./demo.sh` does steps 2 to 5 one at a time: it prints each command, waits for Enter, runs it, and
+opens goldmap and the notebook in your browser (`./demo.sh --auto` runs without pauses; `DUMPS=dumps-quick.txt ./demo.sh` fetches only 4 dumps). It
+uses `.venv` if it is there. It needs bash, and it has only been tried on macOS.
+
 ## What is here
 
 | | |
@@ -83,6 +87,7 @@ jupyter lab am-lines-demo.ipynb
 | `registry/` | the detector registry the definition names (a copy, see `registry/SOURCE.md`) |
 | `am-lines-demo.ipynb` | the notebook |
 | `dumps-full.txt`, `dumps-quick.txt` | the dumps to fetch (all 12, or 4 for a quick test) |
+| `demo.sh` | the steps above as a paced script (Enter to run each one) |
 | `requirements.txt` | the exact versions this was tried with |
 
 ## Things to know
