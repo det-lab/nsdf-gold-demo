@@ -1,0 +1,50 @@
+# Made with goldmap. Check:  python -m goldsluice check am-lines.dataset.toml
+
+[dataset]
+name = "am-lines"
+output = "output/am-lines"
+description = "Run 76 series 07221115_0845 (-81.7 V, DCRC1pB trigger): tail line subtracted, window integral over samples 400 to 1500, baseline mean, and 20 % crossing times."
+registry = ["registry"]
+metadata = "series.csv"
+
+[[sources]]
+name = "raw"
+format = "idx"
+paths = ["data/07221115_0845_F[0-9][0-9][0-9][0-9]"]
+detector = "NAI-S2"
+
+[[processing]]
+algorithm = "subtract_line"
+channels = "role:phonon"
+name = "subtract_line1"
+[processing.params]
+fit_end_samples = 4096
+glitch_samples = 2375
+
+[[processing]]
+algorithm = "window_integral"
+channels = "role:phonon"
+input = "subtract_line1"
+[processing.params]
+start_sample = 400
+stop_sample = 1500
+glitch_samples = "@readout.glitch_samples"
+pretrigger_samples = "@readout.pretrigger_samples"
+sample_period_s = "@readout.sample_period_s"
+
+[[processing]]
+algorithm = "baseline"
+channels = "role:phonon"
+[processing.params]
+glitch_samples = "@readout.glitch_samples"
+pretrigger_samples = "@readout.pretrigger_samples"
+
+[[processing]]
+algorithm = "rise_crossing"
+channels = "role:phonon"
+input = "subtract_line1"
+[processing.params]
+fraction = 0.2
+glitch_samples = "@readout.glitch_samples"
+pretrigger_samples = "@readout.pretrigger_samples"
+sample_period_s = "@readout.sample_period_s"
